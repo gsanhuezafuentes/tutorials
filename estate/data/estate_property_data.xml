@@ -1,59 +1,59 @@
 <?xml version="1.0"?>
 <odoo>
-<record id="estate_property_demo_1" model="estate.property">
-    <field name="name">Big Villa</field>
-    <field name="description">A nice and big villa</field>
-    <field name="postcode">12345</field>
-    <field name="date_availability">2020-02-02</field>
-    <field name="expected_price">16000</field>
-    <field name="selling_price">18000</field>
-    <field name="bedrooms">6</field>
-    <field name="living_area">100</field>
-    <field name="facades">4</field>
-    <field name="garage" eval="True"/>
-    <field name="garden" eval="True"/>
-    <field name="garden_area">100000</field>
-    <field name="garden_orientation">south</field>
-    <field name="last_seen" eval="datetime.now()"/>
-    <field name="active" eval="True"/>
-    <field name="state">new</field>
-</record>
-<record id="estate_property_demo_2" model="estate.property">
-    <field name="name">Trailer home</field>
-    <field name="description">Home in a trailer park</field>
-    <field name="postcode">54321</field>
-    <field name="date_availability">1970-01-01</field>
-    <field name="expected_price">15050.99</field>
-    <field name="selling_price">18050.99</field>
-    <field name="bedrooms">1</field>
-    <field name="living_area">10</field>
-    <field name="facades">4</field>
-    <field name="garage" eval="False"/>
-    <field name="garden" eval="False"/>
-    <field name="garden_area">11</field>
-    <field name="garden_orientation">north</field>
-    <field name="last_seen" eval="datetime.now()"/>
-    <field name="active" eval="True"/>
-    <field name="state">canceled</field>
-</record>
-<record id="estate_property_demo_3" model="estate.property">
-    <field name="name">Michel home</field>
-    <field name="description">Home in a trailer park</field>
-    <field name="postcode">67890</field>
-    <field name="date_availability">1970-01-01</field>
-    <field name="expected_price">100000.00</field>
-    <field name="selling_price">120000.00</field>
-    <field name="bedrooms">2</field>
-    <field name="living_area">15</field>
-    <field name="facades">10</field>
-    <field name="garage" eval="False"/>
-    <field name="garden" eval="False"/>
-    <field name="garden_area">10</field>
-    <field name="garden_orientation">west</field>
-    <field name="last_seen" eval="datetime.now()"/>
-    <field name="active" eval="True"/>
-    <field name="state">canceled</field>
-</record>
+    <record id="estate_property_demo_1" model="estate.property">
+        <field name="name">Big Villa</field>
+        <field name="description">A nice and big villa</field>
+        <field name="postcode">12345</field>
+        <field name="date_availability">2020-02-02</field>
+        <field name="expected_price">16000</field>
+        <field name="selling_price">0</field>
+        <field name="bedrooms">6</field>
+        <field name="living_area">100</field>
+        <field name="facades">4</field>
+        <field name="garage" eval="True"/>
+        <field name="garden" eval="True"/>
+        <field name="garden_area">100000</field>
+        <field name="garden_orientation">south</field>
+        <field name="last_seen" eval="datetime.now()"/>
+        <field name="active" eval="True"/>
+        <field name="status">new</field>
+    </record>
+    <record id="estate_property_demo_2" model="estate.property">
+        <field name="name">Trailer home</field>
+        <field name="description">Home in a trailer park</field>
+        <field name="postcode">54321</field>
+        <field name="date_availability">1970-01-01</field>
+        <field name="expected_price">15050.99</field>
+        <field name="selling_price">0</field>
+        <field name="bedrooms">1</field>
+        <field name="living_area">10</field>
+        <field name="facades">4</field>
+        <field name="garage" eval="False"/>
+        <field name="garden" eval="False"/>
+        <field name="garden_area">11</field>
+        <field name="garden_orientation">north</field>
+        <field name="last_seen" eval="datetime.now()"/>
+        <field name="active" eval="True"/>
+        <field name="status">canceled</field>
+    </record>
+    <record id="estate_property_demo_3" model="estate.property">
+        <field name="name">Michel home</field>
+        <field name="description">Home in a trailer park</field>
+        <field name="postcode">67890</field>
+        <field name="date_availability">1970-01-01</field>
+        <field name="expected_price">100000.00</field>
+        <field name="selling_price">0</field>
+        <field name="bedrooms">2</field>
+        <field name="living_area">15</field>
+        <field name="facades">10</field>
+        <field name="garage" eval="False"/>
+        <field name="garden" eval="False"/>
+        <field name="garden_area">10</field>
+        <field name="garden_orientation">west</field>
+        <field name="last_seen" eval="datetime.now()"/>
+        <field name="active" eval="True"/>
+        <field name="status">canceled</field>
+    </record>
 
 
 </odoo>
