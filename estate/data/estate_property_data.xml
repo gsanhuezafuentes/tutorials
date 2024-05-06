@@ -19,6 +19,24 @@
         <field name="status">new</field>
     </record>
     <record id="estate_property_demo_2" model="estate.property">
+        <field name="name">Robert Patison Home</field>
+        <field name="description">A nice and big villa</field>
+        <field name="postcode">12345</field>
+        <field name="date_availability">2020-02-02</field>
+        <field name="expected_price">16000</field>
+        <field name="selling_price">0</field>
+        <field name="bedrooms">6</field>
+        <field name="living_area">100</field>
+        <field name="facades">4</field>
+        <field name="garage" eval="True"/>
+        <field name="garden" eval="True"/>
+        <field name="garden_area">100000</field>
+        <field name="garden_orientation">south</field>
+        <field name="last_seen" eval="datetime.now()"/>
+        <field name="active" eval="True"/>
+        <field name="status">new</field>
+    </record>
+    <record id="estate_property_demo_3" model="estate.property">
         <field name="name">Trailer home</field>
         <field name="description">Home in a trailer park</field>
         <field name="postcode">54321</field>
@@ -36,7 +54,7 @@
         <field name="active" eval="True"/>
         <field name="status">canceled</field>
     </record>
-    <record id="estate_property_demo_3" model="estate.property">
+    <record id="estate_property_demo_4" model="estate.property">
         <field name="name">Michel home</field>
         <field name="description">Home in a trailer park</field>
         <field name="postcode">67890</field>

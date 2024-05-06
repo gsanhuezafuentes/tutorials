@@ -7,6 +7,7 @@ from odoo.tools import float_compare, float_is_zero
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    _order = 'id desc'
 
     name = fields.Char(default="Unknown")
     description = fields.Text()
@@ -37,7 +38,8 @@ class EstateProperty(models.Model):
             ('offer_accepted', 'Offer Accepted'),
             ('sold', 'Sold'),
             ('canceled', 'Canceled'),
-        ]
+        ],
+        default="new"
     )
     property_type_id = fields.Many2one('estate.property.type')
     buyer_id = fields.Many2one('res.partner')
@@ -91,22 +93,35 @@ class EstateProperty(models.Model):
         for record in self:
             if (
                 not float_is_zero(record.selling_price, 2) 
-                and float_compare(record.selling_price, record.expected_price * .9) < 0
+                and float_compare(record.selling_price, record.expected_price * .9, precision_digits=2) < 0
             ):
                 raise ValidationError("The selling price can't be lower than 90% of the expected price")
       
 class EstatePropertyType(models.Model):
     _name = 'estate.property.type'
     _description = 'Estate Property Type'
+    _order = 'sequence, name'
+
 
     name = fields.Char(required=True)
+    property_ids = fields.One2many('estate.property', 'property_type_id')
+    sequence = fields.Integer('Sequence', default=1, help="Used to order property types. Lower is better.")
+    offer_ids = fields.One2many('estate.property.offer', 'property_type_id')
+    offer_counts = fields.Integer(compute="_compute_offer_counts")
+
+    @api.depends('offer_ids')
+    def _compute_offer_counts(self):
+        for record in self:
+            record.offer_counts = len(record.offer_ids)
 
 
 class EstatePropertyTag(models.Model):
     _name = 'estate.property.tag'
     _description = 'Estate Property Tag'
+    _order = 'name'
 
     name = fields.Char(required=True, unique=True)
+    color = fields.Integer()
 
     _sql_constraints = [
         ("unique_name", "UNIQUE(name)", "The name must be unique"),
@@ -116,6 +131,7 @@ class EstatePropertyTag(models.Model):
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Estate Property Offer'
+    _order = 'price desc'
 
     price = fields.Float()
     status = fields.Selection(
@@ -128,8 +144,9 @@ class EstatePropertyOffer(models.Model):
     valid_to = fields.Date()
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(compute="_compute_date_deadline", inverse="_inverse_date_deadline")
-    partner_id = fields.Many2one('res.partner')
+    partner_id = fields.Many2one('res.partner', required=True)
     property_id = fields.Many2one('estate.property')
+    property_type_id = fields.Many2one(related='property_id.property_type_id', store=True)
 
     _sql_constraints = [
         ("check_price", "CHECK(price > 0)", "The price must be strictly positive"),
@@ -150,6 +167,7 @@ class EstatePropertyOffer(models.Model):
             record.property_id.selling_price = record.price
             record.property_id.buyer_id = record.partner_id
             record.status = 'accepted'
+            record.property_id.status = 'offer_accepted'
         return True
 
     def refuse_offer(self):
