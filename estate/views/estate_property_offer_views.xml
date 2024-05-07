@@ -19,7 +19,6 @@
                 <button name="accept_offer" title="Accept Offer" invisible="status" type="object" icon="fa-check"/>
                 <button name="refuse_offer" title="Refuse Offer" invisible="status" type="object" icon="fa-times"/>
                 <field name="status" column_invisible="True"/>
-                <field name="property_type_id"/>
             </tree>
         </field>
 

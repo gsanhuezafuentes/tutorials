@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+import debugpy
+
 from odoo import api, models, fields
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, float_is_zero
@@ -53,6 +55,13 @@ class EstateProperty(models.Model):
         ("check_expected_price", "CHECK(expected_price > 0)", "The expected price must be strictly positive"),
         ("check_selling_price", "CHECK(selling_price >= 0)", "The selling price must be positive"),
     ]
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_new_or_canceled(self):
+        for record in self:
+            if record.status not in ['new', 'canceled']:
+                raise UserError("You can only delete new or canceled properties")
+
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -151,6 +160,17 @@ class EstatePropertyOffer(models.Model):
     _sql_constraints = [
         ("check_price", "CHECK(price > 0)", "The price must be strictly positive"),
     ]
+
+    @api.model
+    def create(self, vals):
+        exist_higher_price = self.search_count([
+            ("property_id", "=", vals["property_id"]), ("price", ">", vals["price"]),
+        ])
+        if exist_higher_price:
+            raise ValidationError("There is already an offer with a higher price")
+        
+        self.env["estate.property"].browse(vals.get("property_id")).write({"status": "offer_received"})
+        return super().create(vals)
 
     @api.depends('create_date', 'validity')
     def _compute_date_deadline(self):
